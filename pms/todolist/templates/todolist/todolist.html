@@ -1,6 +1,16 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
+
+    <a href="{% url 'project:project' project.id %}">
+        <div class="flex mb-6 gap-x-1">
+            <svg class="self-center w-6 h-6 dark:text-slate" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13"/>
+            </svg>
+            <p class="self-center text-6">back</p>
+        </div>
+    </a>
+
     <h1 class="mb-6 text-3xl">{{ todolist.name }}</h1>
 
     {% if todolist.description %}
@@ -12,14 +22,31 @@
     <a href="{% url 'todolist:delete' project.id todolist.id %}" class="py-4 px-8 bg-amber-600 text-white inline-block">Delete</a>
 
     <div class="mt-6 grid grid-cols-4 gap-4">
+
         {% for task in todolist.tasks.all %}
-            <div class="py-6 px-6 bg-slate-200">
+
+            {% if task.is_done %}
+            <div class="flex gap-2 py-6 px-6 bg-slate-400 text-slate-800">
+                <a href="{% url 'task:detail' todolist.project.id todolist.id task.id %}?is_done=no"><h2 class="text-xl">🗹</h2></a>
+                <a href="{% url 'task:detail' todolist.project.id todolist.id task.id %}">
+                    <h2 class="mb-4 text-xl"><s>{{ task.name }}</s></h2>
+
+                    <p class="text-sm"><s>{{ task.description }}</s></p>
+                </a>
+            </div>
+
+            {% else %}
+            <div class="flex gap-2 py-6 px-6 bg-slate-100 text-slate-700">
+                <a href="{% url 'task:detail' todolist.project.id todolist.id task.id %}?is_done=yes"><h2 class="text-xl">☐</h2></a>
                 <a href="{% url 'task:detail' todolist.project.id todolist.id task.id %}">
                     <h2 class="mb-4 text-xl">{{ task.name }}</h2>
 
-                    <p class="text-sm text-slate-600">{{ task.description }}</p>
+                    <p class="text-sm">{{ task.description }}</p>
                 </a>
             </div>
+            {% endif %}
+
         {% endfor %}
+
     </div>
 {% endblock %}

@@ -5,6 +5,8 @@ from project.models import Project
 from todolist.models import Todolist
 from .models import Task
 
+from urllib.parse import urlparse
+
 
 @login_required
 def add(request, project_id, todolist_id):
@@ -35,7 +37,14 @@ def detail(request, project_id, todolist_id, pk):
         task.is_done = False
         task.save()
 
+    if request.GET.get('is_done', '') in ('yes', 'no') and (
+            urlparse(request.META.get('HTTP_REFERER')).path == f'/projects/{project_id}/{todolist_id}/'
+    ):
+        return redirect(f'/projects/{project_id}/{todolist_id}/')
+
     return render(request, 'task/detail.html', {
+        'project': project,
+        'todolist': todolist,
         'task': task
     })
 
