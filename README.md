@@ -6,6 +6,9 @@ This is a result of Django project based on a tutorial by [**@SteinOveHelset**](
 Huge thanks to [Stein Helset](https://github.com/SteinOveHelset) for the original video tutorial.  
 If you're just starting out with Django, check out his video and follow step-by-step instruction — it's super beginner-friendly and clear.
 
+**Note**  
+This repository contains additional features that make project result different from original video tutorial.
+
 ---
 
 ## 🛠 Setup Instructions (for Forked Repository Users)
