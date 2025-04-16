@@ -31,6 +31,9 @@ def detail(request, project_id, todolist_id, pk):
     if request.GET.get('is_done', '') == 'yes':
         task.is_done = True
         task.save()
+    if request.GET.get('is_done', '') == 'no':
+        task.is_done = False
+        task.save()
 
     return render(request, 'task/detail.html', {
         'task': task
